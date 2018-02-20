@@ -7,10 +7,11 @@ easily repeat a command without rewriting alias definitions in your
 
 ---
 
-You can alias this package and then call it from the shell as so
+Just add this function to your .bashrc then it will run wherever.
+You can specify where to save the commands when calling the `cmds()` funciton.
 
-alias j="python -c \"import cmdmark; cmdmark('~/.savedCommands.dat');\""
 
+function j { $(python -c 'from cmdmark import cmds; cmds("~/.savedCommands.dat");' "$@";); }
 
 Then you can use it with
 
