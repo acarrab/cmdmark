@@ -33,6 +33,6 @@ You can mark any commands that you want as long as you can pass them into comman
 
 I like to define this function for marking the current directory
 
-````
+```
 function m { j -m $1 "cd $PWD"; }
-````
+```
