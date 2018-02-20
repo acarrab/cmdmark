@@ -10,16 +10,21 @@ easily repeat a command without rewriting alias definitions in your
 Just add this function to your .bashrc then it will run wherever.
 You can specify where to save the commands when calling the `cmds()` funciton.
 
+.. highlight:: bash
+	       function j { $(python -c 'from cmdmark import cmds; cmds("~/.savedCommands.dat");' "$@";); }
 
-function j { $(python -c 'from cmdmark import cmds; cmds("~/.savedCommands.dat");' "$@";); }
+
+Use -h
 
 Then you can use it with
 
-$ j -s access 'ssh whatever.server.edu'
+.. code-block:: bash
+	       $ j -s a 'ssh whatever.server.edu'
 
 Then, instead of typing the ssh command or adding an alias in your bashrc, you can simply just jump to that locations
 
-$ j access
+.. code-block:: bash
+	       $ j a
 
 
 You can mark any commands that you want as long as you can pass them into command line argument
