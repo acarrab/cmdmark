@@ -40,8 +40,7 @@ Your resulting output will be something like
 [cmdmark] acarrab$ ./install.sh
 add these lines to your .bashrc file to use
 -------------------------------------------
-function j { $(~/bashtools/cmdmark/dist/cmdmark.sh "$1" "$2" ${
-@:3}); }
+function j { $(~/bashtools/cmdmark/dist/cmdmark.sh "$1" "$2" ${@:3}); }
 function m { j -s "$1" cd $PWD; }
 ```
 Add that line to your bashrc
