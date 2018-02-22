@@ -38,8 +38,11 @@ bash ./install.sh
 Your resulting output will be something like
 ```bash
 [cmdmark] acarrab$ ./install.sh
-add the next line to your .bashrc file to use
-function j { $($dist "$1" "$2" ${@:3}); }
+add these lines to your .bashrc file to use
+-------------------------------------------
+function j { $(~/bashtools/cmdmark/dist/cmdmark.sh "$1" "$2" ${
+@:3}); }
+function m { j -s "$1" cd $PWD; }
 ```
 Add that line to your bashrc
 
