@@ -28,5 +28,7 @@ cat $src >> $dist
 chmod +x $dist
 
 
-echo "add the next line to your .bashrc file to use"
-echo 'function j { $($dist "$1" "$2" ${@:3}); }'
+echo "add these lines to your .bashrc file to use"
+echo "-------------------------------------------"
+echo 'function j { $('$dist' "$1" "$2" ${@:3}); }'
+echo 'function m { j -s "$1" cd $PWD; }'
