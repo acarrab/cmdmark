@@ -3,6 +3,8 @@
 Mark commands and locations in bash easily.
 The commands are saved where you specify when installing
 
+The script is written in bash, so it should be compatible with most linux/macOS systems.
+
 
 You can simply add the command to be permanently saved (until deleting it yourself)
 ```bash
@@ -83,13 +85,19 @@ $ j server
 it will ssh to that server
 
 
-You can also label your commands
+You can also set a default command to run when you type just `j`
 ```bash
-j -s
+$ j -s '' echo I am the default command\!
+$ j
+I am the default command!
+```
+
 
 ```
 ### -l
 Lists the possible commands
+
+Here is an example of what mine kind of looks like
 
 ```bash
 acarrab$ j -l
