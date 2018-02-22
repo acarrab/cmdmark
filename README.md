@@ -92,8 +92,6 @@ $ j
 I am the default command!
 ```
 
-
-```
 ### -l
 Lists the possible commands
 
