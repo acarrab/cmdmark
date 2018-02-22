@@ -54,9 +54,9 @@ function m { j -s "$1" cd $PWD; }
 to mark your current directory with a name
 
 
-## Functionality
+## Functionality through flag
 
-### -h
+### `-h`
 List the possible commands
 
 ```bash
@@ -68,7 +68,7 @@ commands:
    help:   -h
 ```
 
-### -s
+### `-s`
 Set command
 
 
@@ -92,7 +92,7 @@ $ j
 I am the default command!
 ```
 
-### -l
+### `-l`
 Lists the possible commands
 
 Here is an example of what mine kind of looks like
@@ -116,7 +116,7 @@ acarrab$ j -l
  (transcode) --> ssh -t access.server.edu ssh other
 ```
 
-### -d
+### `-d`
 Deletes the command
 
 Example:
