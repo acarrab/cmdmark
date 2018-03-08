@@ -48,7 +48,7 @@ function listCommands {
 
 function deleteCommand {
     newCommands="$(cat $savedCommands | grep -v -e '^('$1')')"
-    printf "$newCommands\n" > $savedCommands
+    printf "$newCommands\n" | grep -v '^$' > $savedCommands
 }
 
 # if it has a flag
