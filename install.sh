@@ -21,6 +21,7 @@ src=$(realpath ./src/cmdmark.sh)
 mkdir dist
 dist=$(realpath ./dist/cmdmark.sh)
 
+if [ ! -f $filename ]; then touch $filename; fi
 
 echo "#!/bin/bash" > $dist
 echo "savedCommands=$filename" >> $dist
