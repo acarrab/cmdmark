@@ -5,7 +5,7 @@ savedCommands=/Users/acarrab/.savedCommands.dat
 ###############################################################################
 # echo $savedCommands
 
-function colorText { echo $(tput setaf 2)"$@"$(tput sgr0); }
+function colorText { echo "$@"; #echo $(tput setaf 2)"$@"$(tput sgr0); }
 
 function printCommand {
     cmd=$1

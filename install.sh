@@ -18,6 +18,7 @@ fi
 
 
 src=$(realpath ./src/cmdmark.sh)
+mkdir dist
 dist=$(realpath ./dist/cmdmark.sh)
 
 
