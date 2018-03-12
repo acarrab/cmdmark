@@ -66,5 +66,5 @@ if [[ $1 != '' && ${1::1} == '-' ]]; then
 	   echo "   help:   -h" 1>&2;;
     esac
 else
-    getCmd $(cat $savedCommands | grep -e "^($1)")
+    getCmd $(cat $savedCommands | grep -e "^($1)")  "${@:2}"
 fi
