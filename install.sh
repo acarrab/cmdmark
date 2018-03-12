@@ -32,5 +32,5 @@ chmod +x $dist
 
 echo "add these lines to your .bashrc file to use"
 echo "-------------------------------------------"
-echo 'function j { $('$dist' "$1" "$2" ${@:3}); }'
+echo 'function j { eval "$('$dist' "$1" "$2" ${@:3})"; }'
 echo 'function m { j -s "$1" cd $PWD; }'
