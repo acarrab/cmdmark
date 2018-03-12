@@ -27,7 +27,7 @@ function getCmd {
 function printCommands {
     commands="$(cat $savedCommands)"
 
-    longest=$(printf "$commands" | while read line; do k=$(getKey $line); echo ${#k}; done | sort -n | tail -n 1)
+    longest=$(printf "$commands\n" | while read line; do k=$(getKey $line); echo ${#k}; done | sort -n | tail -n 1)
     printf "$commands\n" | \
 	while read cmdline; do
 	    key=$(getKey "$cmdline")
