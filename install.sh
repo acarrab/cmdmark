@@ -1,5 +1,6 @@
 #!/bin/bash
 
+init=${1:-"$HOME/.bashrc"}
 
 if [[ $1 = '' ]]; then
     if [[ "$(uname -s)" = 'Linux' ]]; then
@@ -18,7 +19,7 @@ fi
 
 
 src=$(realpath ./src/cmdmark.sh)
-mkdir dist
+mkdir -p dist
 dist=$(realpath ./dist/cmdmark.sh)
 
 if [ ! -f $filename ]; then touch $filename; fi
@@ -30,7 +31,14 @@ cat $src >> $dist
 chmod +x $dist
 
 
-echo "add these lines to your .bashrc file to use"
-echo "-------------------------------------------"
-echo 'function j { eval "$('$dist' "$1" "$2" ${@:3})"; }'
-echo 'function m { j -s "$1" cd $PWD; }'
+
+
+l1='function j { eval "$('$dist' "$1" "$2" ${@:3})"; }'
+l2='function m { j -s "$1" cd $PWD; }'
+
+
+initText="$(cat $init | grep -ve 'function j [^}]*}' | grep -ve 'function m [^}]*}')"
+printf "$initText\n" > $init
+
+echo $l1 >> $init
+echo $l2 >> $init
