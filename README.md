@@ -6,15 +6,7 @@ The commands are saved where you specify when installing
 The script is written in bash, so it should be compatible with most linux/macOS systems.
 
 
-You can simply add the command to be permanently saved (until deleting it yourself)
-```bash
-$ j -s random ssh random.server.edu
-```
-then run the command
-```bash
-$ j random
-```
-which runs the command `ssh random.server.edu`
+![](gifs/intro.gif)
 
 
 
@@ -41,6 +33,10 @@ Or with the command line argument
 ```bash
 [cmdmark] acarrab$ ./install.sh ~/.bash_profile
 ```
+## Command line arguments
+
+![](gifs/args.gif)
+
 
 ## Functionality through flag
 
