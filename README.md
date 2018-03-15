@@ -26,35 +26,21 @@ git clone https://github.com/acarrab/cmdmark.git
 cd cmdmark
 ```
 ### Run the install
-```bash
-chmod +x install.sh
-./install.sh
-```
-or
-```bash
-bash ./install.sh
-```
 
-Your resulting output will be something like
+
+Note: This writes two commands to your .bashrc `j` and `m`, but it
+also deletes any previously defined commands with those names. You may
+also specify a different init file by just passing it as a command
+line argument.
+
 ```bash
 [cmdmark] acarrab$ ./install.sh
-add these lines to your .bashrc file to use
--------------------------------------------
-function j { $(~/bashtools/cmdmark/dist/cmdmark.sh "$1" "$2" ${@:3}); }
-function m { j -s "$1" cd $PWD; }
 ```
-Add that line to your bashrc
 
-NOTE:
-
-You can also add the line
-
+Or with the command line argument
 ```bash
-function m { j -s "$1" cd $PWD; }
+[cmdmark] acarrab$ ./install.sh ~/.bash_profile
 ```
-
-to mark your current directory with a name
-
 
 ## Functionality through flag
 

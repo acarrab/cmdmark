@@ -18,10 +18,10 @@ function fill {
 }
 
 function getKey {
-    echo "$@" | sed 's/^\((.*)\).*$/\1/'
+    echo "$@" | sed 's/^\(([^)]*)\).*$/\1/'
 }
 function getCmd {
-    echo "$@" | sed 's/^(.*)\(.*\)/\1/'
+    echo "$@" | sed 's/^([^\)]*)\(.*\)/\1/'
 }
 
 function printCommands {
@@ -30,15 +30,15 @@ function printCommands {
     longest=$(printf "$commands\n" | while read line; do k=$(getKey $line); echo ${#k}; done | sort -n | tail -n 1)
     printf "$commands\n" | \
 	while read cmdline; do
-	    key=$(getKey "$cmdline")
-	    cmd=$(getCmd "$cmdline")
-	    echo ${#key} $key $cmd
-	done | sort -n | awk '{$1=""; print $0}' |
+	    key="$(getKey "$cmdline")"
+	    cmd="$(getCmd "$cmdline")"
 
+	    echo ${#key} "$key" "$cmd"
+	done | sort -n | sed 's/^[0-9]\+ \+//g' |
 	while read cmdline; do
-	    key=$(getKey "$cmdline")
-	    cmd=$(getCmd "$cmdline")
-	    echo "$(fill ${#key} $(($longest + 1)) ' ')("$(colorText "${key:1:$((${#key} - 2))}")")" "-->" $cmd 1>&2
+	    key="$(getKey "$cmdline")"
+	    cmd="$(getCmd "$cmdline")"
+	    echo "$(fill ${#key} $(($longest + 1)) ' ')("$(colorText "${key:1:$((${#key} - 2))}")")" "-->" "$cmd" 1>&2
 	done
 }
 
@@ -51,6 +51,7 @@ function deleteCommand {
     printf "$newCommands\n" | grep -v '^$' > $savedCommands
 }
 
+if [[ ! -f $savedCommands ]]; then touch $savedCommands; fi
 # if it has a flag
 if [[ $1 != '' && ${1::1} == '-' ]]; then
     case $1 in
@@ -66,5 +67,5 @@ if [[ $1 != '' && ${1::1} == '-' ]]; then
 	   echo "   help:   -h" 1>&2;;
     esac
 else
-    getCmd $(cat $savedCommands | grep -e "^($1)")
+    getCmd "$(cat $savedCommands | grep -e "^($1)")"
 fi
