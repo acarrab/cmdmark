@@ -51,6 +51,12 @@ function deleteCommand {
     printf "$newCommands\n" | grep -v '^$' > $savedCommands
 }
 
+function areCommands {
+    if (( $(cat $savedCommands | wc -l) != 0 )); then echo 1; fi
+}
+
+
+
 if [[ ! -f $savedCommands ]]; then touch $savedCommands; fi
 # if it has a flag
 if [[ $1 != '' && ${1::1} == '-' ]]; then
@@ -59,7 +65,7 @@ if [[ $1 != '' && ${1::1} == '-' ]]; then
 	      echo "($2) ${@:3}" >> $savedCommands
 	      ;;
 	'-d') deleteCommand ${@:2};;
-	'-l') printCommands;;
+	'-l') if [[ $(areCommands) ]]; then printCommands; fi;;
 	*) echo "commands: " 1>&2
 	   echo "   set:    -s <name> <command>" 1>&2
 	   echo "   delete: -d <name>" 1>&2
