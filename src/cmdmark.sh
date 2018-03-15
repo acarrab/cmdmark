@@ -51,6 +51,7 @@ function deleteCommand {
     printf "$newCommands\n" | grep -v '^$' > $savedCommands
 }
 
+if [[ ! -f $savedCommands ]]; then touch $savedCommands; fi
 # if it has a flag
 if [[ $1 != '' && ${1::1} == '-' ]]; then
     case $1 in
