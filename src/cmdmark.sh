@@ -21,7 +21,7 @@ function getKey {
     echo "$@" | sed 's/^\(([^)]*)\).*$/\1/'
 }
 function getCmd {
-    echo "$@" | sed 's/^([^\)]*)\(.*\)/\1/'
+    echo "$@" | sed 's/^([^)]*) \(.*\)$/\1/'
 }
 
 function printCommands {
@@ -34,7 +34,7 @@ function printCommands {
 	    cmd="$(getCmd "$cmdline")"
 
 	    echo ${#key} "$key" "$cmd"
-	done | sort -n | sed 's/^[0-9]\+ \+//g' |
+	done | sort -n | sed 's/^[0-9]* *//g' |
 	while read cmdline; do
 	    key="$(getKey "$cmdline")"
 	    cmd="$(getCmd "$cmdline")"
