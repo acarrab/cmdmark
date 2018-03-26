@@ -37,8 +37,11 @@ l1='function j { eval "$('$dist' "$1" "$2" ${@:3})"; }'
 l2='function m { j -s "$1" cd $PWD; }'
 
 
-initText="$(cat $init | grep -ve 'function j [^}]*}' | grep -ve 'function m [^}]*}')"
-printf "$initText\n" > $init
 
-echo $l1 >> $init
-echo $l2 >> $init
+tmp="./tmprc"
+sed 's/^.*function [jm] {[^}]*}.*$//g'<$init > $tmp
+cat $tmp > $init
+rm $tmp
+
+echo "$l1" >> $init
+echo "$l2" >> $init
