@@ -74,7 +74,7 @@ if [[ $1 != '' && ${1::1} == '-' ]]; then
 	*) echo "commands: " 1>&2
 	   echo "   set:    -set <name> <command>" 1>&2
 	   echo "   delete: -delete <name>" 1>&2
-	   echo "   rename: -rename <old name> <new name>"
+	   echo "   rename: -rename <old name> <new name>" 1>&2
 	   echo "   list:   -list" 1>&2
 	   echo "   help:   -help" 1>&2;;
     esac
