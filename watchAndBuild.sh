@@ -5,7 +5,7 @@
 lastState=''
 
 while true; do
-    newState=$(cat ./src/*)
+    newState=$(cat ./src/* ./install.sh)
     if [[ "$lastState" !=  "$newState" ]]; then
 	lastState="$newState"
 	./install.sh

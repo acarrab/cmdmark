@@ -26,8 +26,8 @@ if [ ! -f $filename ]; then touch $filename; fi
 
 
 
-function src { echo $(realpath ./src)/$1; }
-function dst { echo $(realpath ./dst)/$1; }
+function src { if [[ ! $1 ]]; then echo $(realpath ./src); else echo $(realpath ./src)/$1; fi }
+function dst { if [[ ! $1 ]]; then echo $(realpath ./dst); else echo $(realpath ./dst)/$1; fi }
 mkdir -p $(dst)
 
 cmdmark="cmdmark.sh"
@@ -56,15 +56,18 @@ function create_cmdmark {
 }
 
 function create_completions {
+    s=$(src $_cmdmark)
+    d=$(dst $_cmdmark)
     echo 'creating completions...'
-    echo '#!/bin/bash' > $(dst $_cmdmark)
-    echo 'function j { eval "$('$(dst $cmdmark)' "$1" "$2" ${@:3})"; }' >> $(dst $_cmdmark)
-    echo 'function m { j -set "$1" cd $PWD; }' >> $(dst $_cmdmark)
-    echo "savedCommands=${filename}" >> $(dst $_cmdmark)
+    echo '#!/bin/bash' > $d
+    echo 'function j { eval "$('$(dst $cmdmark)' "$1" "$2" ${@:3})"; }' >> $d
+    echo 'function m { j -set "$1" cd $PWD; }' >> $d
+    echo "savedCommands=${filename}" >> $d
+    echo "_cmdmark='$(dst $_cmdmark)'" >> $d
+    cat $s >> $d
 
-    echo "_cmdmark='$(dst $_cmdmark)'" >> $(dst $_cmdmark)
-    cat $(src $_cmdmark) >> $(dst $_cmdmark)
 }
+
 
 
 function include_cmdmark {

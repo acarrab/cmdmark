@@ -1,9 +1,19 @@
 ###############################################################################
 #                       bash completion for commands!!!                       #
 ###############################################################################
+
 function _cmdmark {
     local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( "$cur " )
+
+    if [[ $(command -v compopt) ]]; then
+	compopt +o default;
+	COMPREPLY=( )
+    else
+	COMPREPLY=(" ")
+    fi
+
+
+
     if (( $COMP_CWORD < 2 )); then
 	local commands=$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/')
 	COMPREPLY=( $(compgen -W "$commands -set -delete -list -help -rename" -- "$cur") )
@@ -15,7 +25,7 @@ function _cmdmark {
 	    case $COMP_CWORD in
 		2) ;;
 		3) COMPREPLY=( $(compgen  -A "function" -abck -- "$cur") );;
-		*) COMPREPLY=( );;
+		*) if [[ $(command -v compopt) ]]; then compopt -o default; fi;;
 	    esac
 	    ;;
 	'-delete'| '-rename')
@@ -24,8 +34,7 @@ function _cmdmark {
 	    fi;;
 	'-help') ;;
 	'-list') ;;
-	*) COMPREPLY=( );;
-
+	*) if [[ $(command -v compopt) ]]; then compopt -o default; fi;;
     esac
     return 0
 }
