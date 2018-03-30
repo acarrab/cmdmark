@@ -1,3 +1,8 @@
+#!/bin/bash
+savedCommands=/Users/acarrab/.savedCommands.dat
+cmdmark=/Users/acarrab/bashtools/cmdmark/dst/cmdmark.sh
+_cmdmark=/Users/acarrab/bashtools/cmdmark/dst/_cmdmark.sh
+
 ###############################################################################
 #                              Command Management                             #
 ###############################################################################

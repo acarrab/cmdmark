@@ -1,5 +1,9 @@
 # Command Mark
 
+- *New Feature* You can now use Tab completion to finish commands
+- *NOTE* gifs are out of date...
+
+
 Mark commands and locations in bash easily.
 The commands are saved where you specify when installing
 
@@ -40,19 +44,19 @@ Or with the command line argument
 
 ## Functionality through flag
 
-### `-h`
+### `-help`
 List the possible commands
 
 ```bash
-user$ j -h
+user$ j -help
 commands:
-   set:    -s <name> <command>
-   delete: -d <name>
-   list:   -l
-   help:   -h
+   set:    -set <name> <command>
+   delete: -delete <name>
+   list:   -list
+   help:   -help
 ```
 
-### `-s`
+### `-set`
 Set command
 
 
@@ -60,7 +64,7 @@ Examples:
 
 This sets the command `ssh server.place.edu` to the name `server`
 ```bash
-$ j -s server ssh server.place.edu
+$ j -set server ssh server.place.edu
 ```
 then if you type
 ```bash
@@ -71,18 +75,18 @@ it will ssh to that server
 
 You can also set a default command to run when you type just `j`
 ```bash
-$ j -s '' echo I am the default command\!
+$ j -set '' echo I am the default command\!
 $ j
 I am the default command!
 ```
 
-### `-l`
+### `-list`
 Lists the possible commands
 
 Here is an example of what mine kind of looks like
 
 ```bash
-acarrab$ j -l
+acarrab$ j -list
           () --> cd /Users/acarrab/bashtools/cmdmark
          (a) --> ssh access.cs.server.edu
          (k) --> ssh -t access.cs.server.edu ssh acarrab@koala3.cs.server.edu
@@ -100,23 +104,23 @@ acarrab$ j -l
  (transcode) --> ssh -t access.server.edu ssh other
 ```
 
-### `-d`
+### `-delete`
 Deletes the command
 
 Example:
 ```bash
-acarrab$ j -l
+acarrab$ j -list
    () --> cd /Users/acarrab/bashtools/cmdmark
   (a) --> ssh access.cs.server.edu
   (k) --> ssh -t access.cs.server.edu ssh acarrab@koala3.cs.server.edu
   (p) --> /Users/acarrab/bashTools/login.sh
-acarrab$ j -d
-acarrab$ j -l
+acarrab$ j -delete
+acarrab$ j -list
   (a) --> ssh access.cs.server.edu
   (k) --> ssh -t access.cs.server.edu ssh acarrab@koala3.cs.server.edu
   (p) --> /Users/acarrab/bashTools/login.sh
-acarrab$ j -d k
-acarrab$ j -l
+acarrab$ j -delete k
+acarrab$ j -list
   (a) --> ssh access.cs.server.edu
   (p) --> /Users/acarrab/bashTools/login.sh
 ```

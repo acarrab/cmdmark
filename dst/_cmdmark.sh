@@ -1,3 +1,8 @@
+#!/bin/bash
+function j { eval "$(/Users/acarrab/bashtools/cmdmark/dst/cmdmark.sh "$1" "$2" ${@:3})"; }
+function m { j -set "$1" cd $PWD; }
+savedCommands=/Users/acarrab/.savedCommands.dat
+_cmdmark='/Users/acarrab/bashtools/cmdmark/dst/_cmdmark.sh'
 ###############################################################################
 #                       bash completion for commands!!!                       #
 ###############################################################################

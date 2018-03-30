@@ -1,7 +1,8 @@
 #!/bin/bash
 
-init=${1:-"$HOME/.bashrc"}
+init=${1:-"$HOME/.bashrc"} # user can specify their bashrc location
 
+# get our directory name
 if [[ $1 = '' ]]; then
     if [[ "$(uname -s)" = 'Linux' ]]; then
 	basedir=$(dirname "$(readlink -f "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
@@ -18,27 +19,62 @@ fi
 
 
 
-src=$(realpath ./src/cmdmark.sh)
-mkdir -p dist
-dist=$(realpath ./dist/cmdmark.sh)
-
 if [ ! -f $filename ]; then touch $filename; fi
 
-echo "#!/bin/bash" > $dist
-echo "savedCommands=$filename" >> $dist
-cat $src >> $dist
 
-chmod +x $dist
+# fileList
 
 
 
+function src { echo $(realpath ./src)/$1; }
+function dst { echo $(realpath ./dst)/$1; }
 
-l1='function j { eval "$('$dist' "$1" "$2" ${@:3})"; }'
-l2='function m { j -s "$1" cd $PWD; }'
+
+cmdmark="cmdmark.sh"
+_cmdmark="_cmdmark.sh"
+include="include.sh"
+
+declarations="savedCommands=${filename}"'\n'"cmdmark=$(dst $cmdmark)"'\n'"_cmdmark=$(dst $_cmdmark)"'\n'
 
 
-initText="$(cat $init | grep -ve 'function j [^}]*}' | grep -ve 'function m [^}]*}')"
-printf "$initText\n" > $init
 
-echo $l1 >> $init
-echo $l2 >> $init
+function inject_declarations {
+    echo "#!/bin/bash" > $(dst $1)
+
+    printf "$declarations\n" | while read line; do
+	echo $line >> $(dst $1)
+    done
+
+    cat $(src $1) >> $(dst $1)
+}
+
+
+function create_cmdmark {
+    echo 'creating cmdmark...'
+    inject_declarations $cmdmark
+    chmod +x $(dst $cmdmark)
+}
+
+function create_completions {
+    echo 'creating completions...'
+    echo '#!/bin/bash' > $(dst $_cmdmark)
+    echo 'function j { eval "$('$(dst $cmdmark)' "$1" "$2" ${@:3})"; }' >> $(dst $_cmdmark)
+    echo 'function m { j -set "$1" cd $PWD; }' >> $(dst $_cmdmark)
+    echo "savedCommands=${filename}" >> $(dst $_cmdmark)
+
+    echo "_cmdmark='$(dst $_cmdmark)'" >> $(dst $_cmdmark)
+    cat $(src $_cmdmark) >> $(dst $_cmdmark)
+}
+
+
+function include_cmdmark {
+    initText="source '$(dst $_cmdmark)'"
+    if (( $(grep "$initText" <$init | wc -l) == 0 )); then
+	echo 'including the include'
+	echo $initText >> $init;
+    fi
+}
+
+
+
+create_cmdmark && create_completions && include_cmdmark
