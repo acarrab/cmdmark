@@ -77,4 +77,14 @@ function include_cmdmark {
 
 
 
+<<<<<<< HEAD
 create_cmdmark && create_completions && include_cmdmark
+=======
+tmp="./tmprc"
+sed 's/^.*function [jm] {[^}]*}.*$//g'<$init > $tmp
+cat $tmp > $init
+rm $tmp
+
+echo "$l1" >> $init
+echo "$l2" >> $init
+>>>>>>> 5cfb049f2ffe8151e557acfd4082be8a5fe876ea
