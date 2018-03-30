@@ -28,7 +28,7 @@ if [ ! -f $filename ]; then touch $filename; fi
 
 function src { echo $(realpath ./src)/$1; }
 function dst { echo $(realpath ./dst)/$1; }
-
+mkdir -p $(dst)
 
 cmdmark="cmdmark.sh"
 _cmdmark="_cmdmark.sh"
@@ -38,20 +38,20 @@ declarations="savedCommands=${filename}"'\n'"cmdmark=$(dst $cmdmark)"'\n'"_cmdma
 
 
 
-function inject_declarations {
-    echo "#!/bin/bash" > $(dst $1)
-
-    printf "$declarations\n" | while read line; do
-	echo $line >> $(dst $1)
-    done
-
-    cat $(src $1) >> $(dst $1)
-}
-
-
 function create_cmdmark {
     echo 'creating cmdmark...'
-    inject_declarations $cmdmark
+
+    s=$(src $cmdmark)
+    d=$(dst $cmdmark)
+
+    echo "#!/bin/bash" > $d
+
+    printf "$declarations\n" | while read line; do
+	echo $line >> $d
+    done
+
+    cat $s >> $d
+
     chmod +x $(dst $cmdmark)
 }
 
