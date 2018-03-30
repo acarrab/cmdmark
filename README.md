@@ -1,7 +1,7 @@
 # Command Mark
 
-- *New Feature* You can now use Tab completion to finish commands
-- *NOTE* gifs are out of date...
+- **New Feature** You can now use Tab completion to finish commands
+- **NOTE** gifs are out of date...
 
 
 Mark commands and locations in bash easily.

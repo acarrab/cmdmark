@@ -7,8 +7,9 @@ function _cmdmark {
 
 
     if (( $COMP_CWORD < 2 )); then
-	local commands=$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/' | grep -ve '^$')
-	COMPREPLY=( $(compgen -W "$commands -set -delete -list -help") )
+	local commands=$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/')
+	COMPREPLY=( $(compgen -W "$commands -set -delete -list -help" |
+			  grep -e "^$cur") )
 	return 0
     fi
 
@@ -22,7 +23,8 @@ function _cmdmark {
 	    ;;
 	'-delete')
 	    case $COMP_CWORD in
-		2) COMPREPLY=( $(compgen -W "$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/' | grep -ve '^$')") );;
+		2) COMPREPLY=( $(compgen -W "$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/')" |
+				     grep -e "^$cur") );;
 		*) COMPREPLY=( );;
 	    esac
 	    ;;
