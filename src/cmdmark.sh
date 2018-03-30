@@ -72,11 +72,11 @@ if [[ $1 != '' && ${1::1} == '-' ]]; then
 	'-rename') renameCommand ${@:2};;
 	'-list') if [[ $(areCommands) ]]; then printCommands; fi;;
 	*) echo "commands: " 1>&2
-	   echo "   set:    -set <name> <command>" 1>&2
-	   echo "   delete: -delete <name>" 1>&2
-	   echo "   rename: -rename <old name> <new name>" 1>&2
-	   echo "   list:   -list" 1>&2
-	   echo "   help:   -help" 1>&2;;
+	   echo "   set a cmd:        -set <name> <command>" 1>&2
+	   echo "   delete:           -delete <name>" 1>&2
+	   echo "   rename:           -rename <old name> <new name>" 1>&2
+	   echo "   list saved cmds:  -list" 1>&2
+	   echo "   help:             -help" 1>&2;;
     esac
 else
     getCmd "$(cat $savedCommands | grep -e "^($1)")"
