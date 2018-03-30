@@ -8,7 +8,7 @@ function _cmdmark {
 
     if (( $COMP_CWORD < 2 )); then
 	local commands=$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/')
-	COMPREPLY=( $(compgen -W "$commands -set -delete -list -help" |
+	COMPREPLY=( $(compgen -W "$commands -set -delete -list -help -rename" |
 			  grep -e "^$cur") )
 	return 0
     fi
@@ -22,6 +22,13 @@ function _cmdmark {
 	    esac
 	    ;;
 	'-delete')
+	    case $COMP_CWORD in
+		2) COMPREPLY=( $(compgen -W "$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/')" |
+				     grep -e "^$cur") );;
+		*) COMPREPLY=( );;
+	    esac
+	    ;;
+	'-rename')
 	    case $COMP_CWORD in
 		2) COMPREPLY=( $(compgen -W "$(cat $savedCommands | sed 's/^(\([^)]*\)).*$/\1/')" |
 				     grep -e "^$cur") );;

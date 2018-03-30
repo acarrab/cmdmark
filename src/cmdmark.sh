@@ -50,6 +50,10 @@ function deleteCommand {
     newCommands="$(cat $savedCommands | grep -v -e '^('$1')')"
     printf "$newCommands\n" | grep -v '^$' > $savedCommands
 }
+function renameCommand {
+    newCommands="$(cat $savedCommands | sed 's/^('$1')/('$2')/' )"
+    printf "$newCommands\n" | grep -v '^$' > $savedCommands
+}
 
 function areCommands {
     if (( $(cat $savedCommands | wc -l) != 0 )); then echo 1; fi
@@ -65,12 +69,14 @@ if [[ $1 != '' && ${1::1} == '-' ]]; then
 	      echo "($2) ${@:3}" >> $savedCommands
 	      ;;
 	'-delete') deleteCommand ${@:2};;
+	'-rename') renameCommand ${@:2};;
 	'-list') if [[ $(areCommands) ]]; then printCommands; fi;;
 	*) echo "commands: " 1>&2
-	   echo "   set:    -s <name> <command>" 1>&2
-	   echo "   delete: -d <name>" 1>&2
-	   echo "   list:   -l" 1>&2
-	   echo "   help:   -h" 1>&2;;
+	   echo "   set:    -set <name> <command>" 1>&2
+	   echo "   delete: -delete <name>" 1>&2
+	   echo "   rename: -rename <old name> <new name>"
+	   echo "   list:   -list" 1>&2
+	   echo "   help:   -help" 1>&2;;
     esac
 else
     getCmd "$(cat $savedCommands | grep -e "^($1)")"
